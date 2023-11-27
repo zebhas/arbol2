@@ -1,6 +1,6 @@
 {
   "contieneSubarbol": true,
-  "recorridoPreorden": "A,N,A,",
-  "recorridoInorden": "A,A,N,",
-  "subarbolInfo": "N,A,, A,N,"
+  "recorridoPreorden": "A,B,D,E,C,F,G,",
+  "recorridoInorden": "D,B,E,A,F,C,G,",
+  "subarbolInfo": "B,D,E,, D,B,E,"
 }

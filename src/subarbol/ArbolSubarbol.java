@@ -18,10 +18,23 @@ class Nodo {
         this.izquierdo = null;
         this.derecho = null;
     }
+
+    public String getValor() {
+        return valor;
+    }
+
+    public Nodo getIzquierdo() {
+        return izquierdo;
+    }
+
+    public Nodo getDerecho() {
+        return derecho;
+    }
+    
 }
 
 public class ArbolSubarbol {
-    private Nodo raiz;
+    public Nodo raiz;
 
     public ArbolSubarbol() {
         raiz = null;
@@ -132,17 +145,19 @@ public class ArbolSubarbol {
         }
     }
 
-    private boolean sonIguales(Nodo nodo1, Nodo nodo2) {
-        if (nodo1 == null && nodo2 == null) {
-            return true;
-        }
-
-        if (nodo1 == null || nodo2 == null) {
-            return false;
-        }
-
-        return (nodo1.valor.equals(nodo2.valor) && sonIguales(nodo1.izquierdo, nodo2.izquierdo) && sonIguales(nodo1.derecho, nodo2.derecho));
+   public boolean sonIguales(Nodo nodo1, Nodo nodo2) {
+    if (nodo1 == null && nodo2 == null) {
+        return true;
     }
+
+    if (nodo1 == null || nodo2 == null) {
+        return false;
+    }
+
+    return (nodo1.valor.equals(nodo2.valor) &&
+            sonIguales(nodo1.izquierdo, nodo2.izquierdo) &&
+            sonIguales(nodo1.derecho, nodo2.derecho));
+}
 
     public void imprimirInorden() {
         System.out.println("Recorrido Inorden del Árbol:");
@@ -177,12 +192,31 @@ public class ArbolSubarbol {
         obtenerRecorridoInordenRec(nodo, sb);
         return sb.toString();
     }
+   
+
+
+
 
     private void obtenerRecorridoInordenRec(Nodo nodo, StringBuilder sb) {
         if (nodo != null) {
             obtenerRecorridoInordenRec(nodo.izquierdo, sb);
             sb.append(nodo.valor).append(",");
             obtenerRecorridoInordenRec(nodo.derecho, sb);
+        }
+    }
+    public String obtenerArbolReconstruido() {
+        StringBuilder resultado = new StringBuilder();
+        obtenerArbolReconstruidoRec(raiz, resultado);
+        return resultado.toString();
+    }
+
+    private void obtenerArbolReconstruidoRec(Nodo nodo, StringBuilder sb) {
+        if (nodo != null) {
+            sb.append(nodo.getValor()).append(",");
+            obtenerArbolReconstruidoRec(nodo.getIzquierdo(), sb);
+            obtenerArbolReconstruidoRec(nodo.getDerecho(), sb);
+        } else {
+            sb.append("null").append(",");
         }
     }
 }
