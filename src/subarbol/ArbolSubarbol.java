@@ -81,8 +81,8 @@ public class ArbolSubarbol {
         return -1;
     }
 
-    public void contieneSubarbol(ArbolSubarbol subArbol) {
-        boolean contiene = contieneSubarbolRec(raiz, subArbol.raiz);
+    public boolean contieneSubarbol(ArbolSubarbol subArbol) {
+        boolean contiene = contieneSubarbolRec(this.raiz, subArbol.raiz);
 
         if (contiene) {
             System.out.println("El árbol principal contiene el siguiente subárbol:");
@@ -93,8 +93,10 @@ public class ArbolSubarbol {
             System.out.println("Razón: El subárbol no está presente en el árbol principal.");
             generarArchivoJSON("resultado.json", false, null);
         }
-        
+
+        return contiene;
     }
+
     private boolean contieneSubarbolRec(Nodo nodoArbol, Nodo nodoSubarbol) {
         if (nodoSubarbol == null) {
             return true;
@@ -105,14 +107,26 @@ public class ArbolSubarbol {
         }
 
         if (sonIguales(nodoArbol, nodoSubarbol)) {
-            return contieneSubarbolRec(nodoArbol.izquierdo, nodoSubarbol.izquierdo) &&
-                    contieneSubarbolRec(nodoArbol.derecho, nodoSubarbol.derecho);
+            return true;
         }
 
-        return contieneSubarbolRec(nodoArbol.izquierdo, nodoSubarbol) || 
+        return contieneSubarbolRec(nodoArbol.izquierdo, nodoSubarbol) ||
                contieneSubarbolRec(nodoArbol.derecho, nodoSubarbol);
     }
 
+    public boolean sonIguales(Nodo nodo1, Nodo nodo2) {
+        if (nodo1 == null && nodo2 == null) {
+            return true;
+        }
+
+        if (nodo1 == null || nodo2 == null) {
+            return false;
+        }
+
+        return (nodo1.valor.equals(nodo2.valor) &&
+                sonIguales(nodo1.izquierdo, nodo2.izquierdo) &&
+                sonIguales(nodo1.derecho, nodo2.derecho));
+    }
     public void generarArchivoJSON(String nombreArchivo, boolean contieneSubarbol, ArbolSubarbol subArbol) {
         String recorridoPreorden = obtenerRecorridoPreorden(raiz);
         String recorridoInorden = obtenerRecorridoInorden(raiz);
@@ -145,20 +159,7 @@ public class ArbolSubarbol {
         }
     }
 
-   public boolean sonIguales(Nodo nodo1, Nodo nodo2) {
-    if (nodo1 == null && nodo2 == null) {
-        return true;
-    }
-
-    if (nodo1 == null || nodo2 == null) {
-        return false;
-    }
-
-    return (nodo1.valor.equals(nodo2.valor) &&
-            sonIguales(nodo1.izquierdo, nodo2.izquierdo) &&
-            sonIguales(nodo1.derecho, nodo2.derecho));
-}
-
+   
     public void imprimirInorden() {
         System.out.println("Recorrido Inorden del Árbol:");
         imprimirInordenRec(raiz);
